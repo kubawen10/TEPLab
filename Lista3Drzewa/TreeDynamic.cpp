@@ -21,6 +21,7 @@ NodeDynamic::~NodeDynamic() {
 	}
 }
 
+
 void NodeDynamic::addNewChild() {
 	std::cout << "Adding new child: \n";
 	NodeDynamic* newNode = new NodeDynamic();
@@ -41,6 +42,15 @@ void NodeDynamic::addNewChild(NodeDynamic* newChild) {
 	children.push_back(newChild);
 }
 
+NodeDynamic* NodeDynamic::getChild(int childOffset) {
+	if (childOffset < 0 || childOffset >= children.size()) {
+		std::cerr << "Index out of bounds";
+		return NULL;
+	}
+
+	return children[childOffset];
+}
+
 bool NodeDynamic::removeChildFromVector(NodeDynamic* childToRemove)
 {//dont delete it, its used in move function
 	for (int i = 0; i < children.size(); i++) {
@@ -51,15 +61,6 @@ bool NodeDynamic::removeChildFromVector(NodeDynamic* childToRemove)
 	}
 
 	return false;
-}
-
-NodeDynamic* NodeDynamic::getChild(int childOffset) {
-	if (childOffset < 0 || childOffset >= children.size()) {
-		std::cerr << "Index out of bounds";
-		return NULL;
-	}
-
-	return children[childOffset];
 }
 
 void NodeDynamic::printAllBelow() {
