@@ -19,8 +19,6 @@ int main()
 
     delete cloned;
 
-    std::cout << "test";
-
     return 0;
 }
 
