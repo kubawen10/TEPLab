@@ -25,6 +25,8 @@ int main()
     d1.printTree();
     d2.printTree();
 
+    std::cout << "test";
+
     return 0;
 }
 
