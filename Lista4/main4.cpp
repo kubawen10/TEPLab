@@ -1,24 +1,31 @@
 #include <iostream>
-#include "Table.h"
+#include "TreeDynamic.h"
 
 int main()
 {
-    Table<int> tab("A", 3);
-    tab.printTable();
+    TreeDynamic<double> d1;
 
-    tab.setElement(0, 0);
-    tab.setElement(1, 1);
-    tab.setElement(2, 2);
-    tab.printTable();
+    d1.getRoot()->setValue(0);
+    d1.getRoot()->addNewChild(1);
+    d1.getRoot()->addNewChild(2);
+    d1.getRoot()->addNewChild(3);
+    d1.getRoot()->getChild(2)->addNewChild(4);
 
-    Table<int> copyTab(tab);
-    copyTab.printTable();
+    TreeDynamic<double> d2;
+    d2.getRoot()->setValue(50);
+    d2.getRoot()->addNewChild(54);
+    d2.getRoot()->addNewChild(55);
 
-    Table<int>* cloned = copyTab.clone();
-    cloned->printTable();
+    d2.getRoot()->getChild(0)->addNewChild(56);
+    d2.getRoot()->getChild(0)->addNewChild(57);
+    d2.getRoot()->getChild(0)->getChild(0)->addNewChild(58);
 
-    delete cloned;
+
+    d1.moveSubtree(d1.getRoot()->getChild(2), d2.getRoot()->getChild(0));
+    d1.printTree();
+    d2.printTree();
 
     return 0;
 }
+
 
