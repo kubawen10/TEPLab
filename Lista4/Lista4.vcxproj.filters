@@ -20,7 +20,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Table.h">
+    <ClInclude Include="TreeDynamic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
