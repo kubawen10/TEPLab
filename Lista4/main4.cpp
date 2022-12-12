@@ -1,8 +1,16 @@
 #include <iostream>
 #include "TreeDynamic.h"
 
+void tests();
+
 int main()
 {
+    tests();
+
+    return 0;
+}
+
+void tests() {
     TreeDynamic<double> d1;
 
     d1.getRoot()->setValue(0);
@@ -24,8 +32,4 @@ int main()
     d1.moveSubtree(d1.getRoot()->getChild(2), d2.getRoot()->getChild(0));
     d1.printTree();
     d2.printTree();
-
-    return 0;
 }
-
-
