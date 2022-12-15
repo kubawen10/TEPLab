@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lista2Operatory", "Lista2Op
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lista3Drzewa", "Lista3Drzewa\Lista3Drzewa.vcxproj", "{5281AD7B-EFC5-4F7E-917B-6CB39D312B22}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lista5SmartPointer", "Lista5SmartPointer\Lista5SmartPointer.vcxproj", "{C2D9D275-D547-49E5-82E1-A92A33A567AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -61,6 +63,14 @@ Global
 		{5281AD7B-EFC5-4F7E-917B-6CB39D312B22}.Release|x64.Build.0 = Release|x64
 		{5281AD7B-EFC5-4F7E-917B-6CB39D312B22}.Release|x86.ActiveCfg = Release|Win32
 		{5281AD7B-EFC5-4F7E-917B-6CB39D312B22}.Release|x86.Build.0 = Release|Win32
+		{C2D9D275-D547-49E5-82E1-A92A33A567AE}.Debug|x64.ActiveCfg = Debug|x64
+		{C2D9D275-D547-49E5-82E1-A92A33A567AE}.Debug|x64.Build.0 = Debug|x64
+		{C2D9D275-D547-49E5-82E1-A92A33A567AE}.Debug|x86.ActiveCfg = Debug|Win32
+		{C2D9D275-D547-49E5-82E1-A92A33A567AE}.Debug|x86.Build.0 = Debug|Win32
+		{C2D9D275-D547-49E5-82E1-A92A33A567AE}.Release|x64.ActiveCfg = Release|x64
+		{C2D9D275-D547-49E5-82E1-A92A33A567AE}.Release|x64.Build.0 = Release|x64
+		{C2D9D275-D547-49E5-82E1-A92A33A567AE}.Release|x86.ActiveCfg = Release|Win32
+		{C2D9D275-D547-49E5-82E1-A92A33A567AE}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

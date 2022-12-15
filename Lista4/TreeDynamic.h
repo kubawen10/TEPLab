@@ -55,7 +55,7 @@ public:
 
 	void print() {
 		std::cout << "Value: " << value << '\n';
-	};
+	}
 
 	void printAllBelow() {
 		if (children.size() == 0) {
@@ -115,7 +115,7 @@ public:
 
 	NodeDynamic<T>* getRoot() {
 		return(root);
-	};
+	}
 
 	void printTree() {
 		root->print();
