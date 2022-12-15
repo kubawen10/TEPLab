@@ -2,12 +2,24 @@
 #include "TreeDynamic.h"
 
 void tests();
+void testMod();
 
 int main()
 {
-    tests();
+    //tests();
+    testMod();
 
     return 0;
+}
+
+void testMod() {
+    TreeDynamic<double> d1;
+    TreeDynamic<int> d2; //d2.sumTree() invisible
+
+    d1.getRoot()->setValue(8);
+    d1.getRoot()->addNewChild(1);
+
+    std::cout << d1.sumTree();
 }
 
 void tests() {
