@@ -51,7 +51,7 @@ Tab Tab::operator=(Tab&& other)
 	other.size = 0;
 
 	std::cout << "op=&& out\n";
-	return std::move(*this);
+	return *this;
 }
 
 Tab::~Tab()

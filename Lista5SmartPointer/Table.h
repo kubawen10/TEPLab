@@ -21,7 +21,7 @@ public:
 	Table(Table&& other);
 	~Table();
 
-	void setName(std::string name);
+	void setName(std::string newName);
 	bool setNewSize(int tableLen);
 	void setValueAt(int index, int value);
 
@@ -29,8 +29,7 @@ public:
 
 	void operator=(const Table& other);
 	void operator=(Table&& other);
-	Table operator+(const Table& other);
-	Table operator+(Table&& other);
+	Table operator+(const Table& other) const;
 
 	//debug
 	friend std::ostream& operator<<(std::ostream& out, const Table& table);
