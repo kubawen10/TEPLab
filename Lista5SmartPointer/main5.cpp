@@ -10,7 +10,7 @@ void testEx4();
 int main()
 {
     //testSmartPointer(); //ex 1-3
-    //testEx4();
+    testEx4();
 }
 
 void testSmartPointer() {
@@ -69,16 +69,22 @@ void ex4MoveOperator() {
 
     Tab t1;
     Tab t2;
+    Tab t3;
     t1.fill();
     t2.setSize(5);
     t2.fill();
+    t3.setSize(15);
+    t3.fill();
 
     std::cout << "Normal operator=\n";
     std::cout << "t1: " << t1 << "\n";
-    std::cout << "t2: " << t2 << "\n\n";
-    t1 = t2;
+    std::cout << "t2: " << t2 << "\n";
+    std::cout << "t3: " << t3 << "\n\n";
+
+    t1 = t2 = t3;
     std::cout << "\nt1 after: " << t1 << "\n";
-    std::cout << "t2 after: " << t2 << "\n\n";
+    std::cout << "t2 after: " << t2 << "\n";
+    std::cout << "t3 after: " << t3 << "\n\n";
 
 
     std::cout << "\nMove operator=\n";

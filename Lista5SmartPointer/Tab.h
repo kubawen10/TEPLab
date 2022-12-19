@@ -15,8 +15,8 @@ public:
 	Tab(Tab&& other);
 
 	//shouldnt operator= return Tab& instead of Tab ?
-	Tab& operator=(const Tab& other);
-	Tab& operator=(Tab&& other);
+	Tab operator=(const Tab& other);
+	Tab operator=(Tab&& other);
 	~Tab();
 	bool setSize(int newSize);
 	int getSize() {

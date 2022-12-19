@@ -20,7 +20,7 @@ Tab::Tab(Tab&& other)
 	std::cout << "Move constructor out\n";
 }
 
-Tab& Tab::operator=(const Tab& other)
+Tab Tab::operator=(const Tab& other)
 {
 	std::cout << "op=& in\n";
 	if (&other == this) {
@@ -35,7 +35,7 @@ Tab& Tab::operator=(const Tab& other)
 	return *this;
 }
 
-Tab& Tab::operator=(Tab&& other)
+Tab Tab::operator=(Tab&& other)
 {
 	std::cout << "op=&& in\n";
 	if (&other == this) {
@@ -51,14 +51,14 @@ Tab& Tab::operator=(Tab&& other)
 	other.size = 0;
 
 	std::cout << "op=&& out\n";
-	return *this;
+	return std::move(*this);
 }
 
 Tab::~Tab()
 {
 	delete[] tab;
 
-	std::cout << "Destructor\n";
+	std::cout <<"Destructor \n";
 }
 
 bool Tab::setSize(int newSize)
