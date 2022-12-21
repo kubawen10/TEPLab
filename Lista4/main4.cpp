@@ -5,7 +5,11 @@ void tests();
 
 int main()
 {
-    //tests();
+    tests();
+
+   // TreeDynamic<TreeDynamic<int>> a;
+   
+   
 
     return 0;
 }

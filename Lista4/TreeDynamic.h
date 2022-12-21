@@ -10,12 +10,12 @@ template<typename T> class NodeDynamic {
 public:
 	NodeDynamic() {
 		value = T();
-		parentNode = NULL;
+		parentNode = nullptr;
 	}
 
 	NodeDynamic(T value) {
 		this->value = value;
-		parentNode = NULL;
+		parentNode = nullptr;
 	}
 
 	~NodeDynamic() {
@@ -47,7 +47,7 @@ public:
 	NodeDynamic<T>* getChild(int childOffset) {
 		if (childOffset < 0 || childOffset >= children.size()) {
 			std::cerr << "Index out of bounds";
-			return NULL;
+			return nullptr;
 		}
 
 		return children[childOffset];
@@ -73,7 +73,7 @@ public:
 
 	void printUp() {
 		print();
-		if (parentNode != NULL) parentNode->printUp();
+		if (parentNode != nullptr) parentNode->printUp();
 	}
 
 private:
@@ -84,7 +84,6 @@ private:
 	T value;
 
 	void addNewChild(NodeDynamic<T>* newChild) {
-		//std::cout << "Adding new child copy: \n";
 		newChild->parentNode = this;
 		children.push_back(newChild);
 	}
@@ -123,12 +122,12 @@ public:
 	}
 
 	bool moveSubtree(NodeDynamic<T>* parentNode, NodeDynamic<T>* newChildNode) {
-		if (parentNode == NULL || newChildNode == NULL) {
+		if (parentNode == nullptr || newChildNode == nullptr) {
 			std::cerr << "Null pointers\n";
 			return false;
 		}
 
-		if (newChildNode->parentNode == NULL) {
+		if (newChildNode->parentNode == nullptr) {
 			std::cerr << "Cant move root\n";
 			return false;
 		}
@@ -141,5 +140,8 @@ public:
 private:
 	NodeDynamic<T>* root;
 };
+
+template<typename T> 
+class TreeDynamic<TreeDynamic<T>>;
 
 #endif
