@@ -20,9 +20,17 @@ Tab::Tab(Tab&& other) noexcept
 	std::cout << "Move constructor out\n";
 }
 
+Tab::~Tab()
+{
+	delete[] tab;
+
+	std::cout << "Destructor \n";
+}
+
 Tab Tab::operator=(const Tab& other)
 {
 	std::cout << "op=& in\n";
+
 	if (&other == this) {
 		return *this;
 	}
@@ -38,6 +46,7 @@ Tab Tab::operator=(const Tab& other)
 Tab Tab::operator=(Tab&& other) noexcept
 {
 	std::cout << "op=&& in\n";
+
 	if (&other == this) {
 		return *this;
 	}
@@ -52,13 +61,6 @@ Tab Tab::operator=(Tab&& other) noexcept
 
 	std::cout << "op=&& out\n";
 	return *this;
-}
-
-Tab::~Tab()
-{
-	delete[] tab;
-
-	std::cout <<"Destructor \n";
 }
 
 bool Tab::setSize(int newSize)
@@ -95,6 +97,7 @@ void Tab::fill() {
 
 void Tab::copy(const Tab& other)
 {
+	std::cout << "Copy in\n";
 	tab = new int[other.size];
 	size = other.size;
 
@@ -103,7 +106,7 @@ void Tab::copy(const Tab& other)
 		tab[i] = other.tab[i];
 	}
 
-	std::cout << "Copy\n";
+	std::cout << "Copy out\n";
 }
 
 std::ostream& operator<<(std::ostream& out, const Tab& table) {

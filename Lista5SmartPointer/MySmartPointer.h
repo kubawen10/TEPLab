@@ -34,12 +34,9 @@ public:
 	}
 
 	MySmartPointer(const MySmartPointer& other) {
-		//difference? (learncpp.com)
-		//pointer = new T;
-		//*pointer = *other.pointer;
-
 		pointer = other.pointer;
 		counter = other.counter;
+		
 		counter->add();
 	}
 
@@ -52,7 +49,7 @@ public:
 	}
 
 	MySmartPointer& operator=(const MySmartPointer& other) {
-		//self-assignment: pointer1 = pointer1
+		//self-assignment
 		if (this == &other) {
 			return *this;
 		}

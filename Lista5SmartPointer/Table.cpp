@@ -6,6 +6,7 @@
 
 Table::Table() {
 	std::cout << "Default in\n";
+
 	name = DEFAULT_NAME;
 	tableLength = DEFAULT_TABLE_LENGTH;
 	table = new int[tableLength];
@@ -15,6 +16,7 @@ Table::Table() {
 
 Table::Table(std::string name, int tableLength) {
 	std::cout << "Param constructor " << name << " in\n";
+
 	this->name = std::move(name);
 
 	if (tableLength < 0) {
@@ -26,11 +28,12 @@ Table::Table(std::string name, int tableLength) {
 	}
 	table = new int[tableLength];
 
-	std::cout << "Param constructor " << name << " out\n";
+	std::cout << "Param constructor " << this->name << " out\n";
 }
 
 Table::Table(const Table& other) {
 	std::cout << "Copy constructor " << other.name << " in\n";
+
 	name = other.name + "_copy";
 	tableLength = other.tableLength;
 
@@ -42,16 +45,17 @@ Table::Table(const Table& other) {
 	std::cout << "Copy constructor " << other.name << " out\n";
 }
 
-Table::Table(Table&& other) {
+Table::Table(Table&& other) noexcept{
 	std::cout << "Move copy constructor " << other.name << " in\n";
+
 	name = std::move(other.name);
-	tableLength = other.tableLength;
 	table = other.table;
+	tableLength = other.tableLength;
 	
 	other.table = nullptr;
 	other.tableLength = 0;
 
-	std::cout << "Move copy constructor " << other.name << " out\n";
+	std::cout << "Move copy constructor " << name << " out\n";
 }
 
 Table::~Table() {
@@ -73,7 +77,7 @@ bool Table::setNewSize(int newTableLength) {
 		return true;
 	}
 
-	int* temp = new int[tableLength];
+	int* temp = new int[newTableLength];
 
 	int smaller = std::min(tableLength, newTableLength);
 	for (int i = 0; i < smaller; i++) {
@@ -100,45 +104,54 @@ Table* Table::clone() {
 	return new Table(*this);
 }
 
-void Table::operator=(const Table& other)
+//return std::move() nie ma sensu
+//moze jakby stworzyc nowy obiekt i zwracac go poprzez std::move
+Table Table::operator=(const Table& other)
 {
 	std::cout << "operator= in";
+
 	if (&other == this) {
-		return;
+		return *this;
 	}
 
 	delete[] table;
 
 	tableLength = other.tableLength;
-	table = new int[tableLength];
 
+	table = new int[tableLength];
 	for (int i = 0; i < tableLength; i++) {
 		table[i] = other.table[i];
 	}
+
 	std::cout << "operator= out";
+	return *this;
 }
 
-void Table::operator=(Table&& other)
+//return std::move() nie ma sensu
+//moze jakby stworzyc nowy obiekt i zwracac go poprzez std::move
+Table Table::operator=(Table&& other) noexcept
 {
 	std::cout << "move operator= in";
 
 	if (&other == this) {
-		return;
+		return *this;
 	}
 
 	delete[] table;
 
-	tableLength = other.tableLength;
 	table = other.table;
+	tableLength = other.tableLength;
 
-	other.tableLength = 0;
 	other.table = nullptr;
-	std::cout << "move operator= out";
+	other.tableLength = 0;
 
+	std::cout << "move operator= out";
+	return *this;
 }
 
 Table Table::operator+(const Table& other) const{
 	std::cout << "operator+ in\n";
+
 	std::string sumName = name + " + " + other.name;
 	int sumLength = tableLength + other.tableLength;
 
