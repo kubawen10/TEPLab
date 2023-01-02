@@ -12,11 +12,10 @@ public:
 		size = DEF_TAB_SIZE; 
 	}
 	Tab(const Tab& other);
-	Tab(Tab&& other);
+	Tab(Tab&& other) noexcept;
 
-	//shouldnt operator= return Tab& instead of Tab ?
 	Tab operator=(const Tab& other);
-	Tab operator=(Tab&& other);
+	Tab operator=(Tab&& other) noexcept;
 	~Tab();
 	bool setSize(int newSize);
 	int getSize() {

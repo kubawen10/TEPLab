@@ -116,7 +116,6 @@ void Table::operator=(const Table& other)
 		table[i] = other.table[i];
 	}
 	std::cout << "operator= out";
-
 }
 
 void Table::operator=(Table&& other)
@@ -143,7 +142,7 @@ Table Table::operator+(const Table& other) const{
 	std::string sumName = name + " + " + other.name;
 	int sumLength = tableLength + other.tableLength;
 
-	Table sum(std::move(sumName), sumLength);
+	Table sum(sumName, sumLength);
 
 	for (int i = 0; i < tableLength; i++) {
 		sum.table[i] = table[i];
@@ -154,7 +153,7 @@ Table Table::operator+(const Table& other) const{
 	}
 
 	std::cout << "operator+ out\n";
-	return std::move(sum);
+	return (std::move(sum));
 }
 
 std::ostream& operator<<(std::ostream& out, const Table& table) {

@@ -7,7 +7,7 @@ int main()
 {
     tests();
 
-   // TreeDynamic<TreeDynamic<int>> a;
+   TreeDynamic<TreeDynamic<int>> a;
    
    
 

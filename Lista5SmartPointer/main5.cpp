@@ -81,7 +81,7 @@ void ex4MoveOperator() {
     std::cout << "t2: " << t2 << "\n";
     std::cout << "t3: " << t3 << "\n\n";
 
-    t1 = t2 = t3;
+    t1 = t2;// = t3;
     std::cout << "\nt1 after: " << t1 << "\n";
     std::cout << "t2 after: " << t2 << "\n";
     std::cout << "t3 after: " << t3 << "\n\n";
@@ -102,6 +102,6 @@ void ex4MoveOperator() {
 }
 
 void testEx4() {
-    ex4MoveOperator();
-    //ex4MoveConstructor();
+    //ex4MoveOperator();
+    ex4MoveConstructor();
 }

@@ -8,7 +8,7 @@ Tab::Tab(const Tab& other)
 	std::cout << "Copy Constructor out\n";
 }
 
-Tab::Tab(Tab&& other) 
+Tab::Tab(Tab&& other) noexcept 
 {
 	std::cout << "Move constructor in\n";
 	tab = other.tab;
@@ -35,7 +35,7 @@ Tab Tab::operator=(const Tab& other)
 	return *this;
 }
 
-Tab Tab::operator=(Tab&& other)
+Tab Tab::operator=(Tab&& other) noexcept
 {
 	std::cout << "op=&& in\n";
 	if (&other == this) {
