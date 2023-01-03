@@ -1,10 +1,11 @@
 #include "Individual.h"
 #include "MyRandom.h"
-#include <vector>
 #include <iostream>
+#include <vector>
 
 Individual::Individual(int genotypeLength) : fitnessMem{-1}
 {
+	//creating a random population
 	MyRandom rnd(0, 1);
 	genotype.reserve(genotypeLength);
 	for (int i = 0; i < genotypeLength; i++) {
@@ -12,9 +13,12 @@ Individual::Individual(int genotypeLength) : fitnessMem{-1}
 	}
 }
 
-Individual::Individual(std::vector<bool>& otherGenotype) : fitnessMem{-1}, genotype{otherGenotype}{}
+Individual::Individual(const Individual& other): fitnessMem{other.fitnessMem}, genotype{other.genotype}{}
+
+Individual::Individual(std::vector<bool>& genotype) : fitnessMem{-1}, genotype{genotype}{}
 
 double Individual::fitness(double knapsackCapacity, std::vector<double>& weights, std::vector<double>& values) {
+	//check if fitness has already been calculated
 	if (fitnessMem != -1) {
 		return fitnessMem;
 	}
@@ -26,53 +30,63 @@ double Individual::fitness(double knapsackCapacity, std::vector<double>& weights
 		totalValue += genotype[i] * values[i];
 		totalWeight += genotype[i] * weights[i];
 
-		if (totalWeight > knapsackCapacity) return 0;
+		// fitness == 0 if weight of the objects is greater than knapsack capacity
+		if (totalWeight > knapsackCapacity) {
+			fitnessMem = 0;
+			return 0;
+		}
 	}
 
 	fitnessMem = totalValue;
 	return totalValue;
 }
 
-std::vector<Individual> Individual::crossover(Individual& other, double crossoverProbability) {
+std::vector<Individual> Individual::crossover(Individual& other, double crossProb) {
+	MyRandom probabilityRand(0, 1);
+
+	// if parants are the same individual or there is no srossing, we can return copies of the parent
+	if (probabilityRand.getNextDouble() > crossProb || this == &other) {
+		return { Individual(*this), Individual(other) };
+	}
+
+	//new vectors for genotypes after crossover
 	std::vector<bool> genotype1;
 	std::vector<bool> genotype2;
+	genotype1.reserve(genotype.size());
+	genotype2.reserve(genotype.size());
 
-	MyRandom probabilityRand(0, 1);
-	if (probabilityRand.getNextDouble() < crossoverProbability) {
-		
-		MyRandom crossRand(1, genotype.size() - 1);
-		int crossPoint = crossRand.getNextInt();
-		genotype1.reserve(genotype.size());
-		genotype2.reserve(genotype.size());
+	//get random cross point, there are n-1 possible positions
+	MyRandom crossRand(1, genotype.size() - 1);
+	int crossPoint = crossRand.getNextInt();
 
-		for (int i = 0; i < crossPoint; i++) {
-			genotype1.push_back(genotype[i]);
-			genotype2.push_back(other.genotype[i]);
-		}
-		for (int i = crossPoint; i < genotype.size(); i++) {
-			genotype1.push_back(other.genotype[i]);
-			genotype2.push_back(genotype[i]);
-		}
+	//first part of the genotype remains the same for each parent, second is taken from the other parent
+	for (int i = 0; i < crossPoint; i++) {
+		genotype1.push_back(genotype[i]);
+		genotype2.push_back(other.genotype[i]);
 	}
-	else {
-		genotype1 = genotype;
-		genotype2 = other.genotype;
+	for (int i = crossPoint; i < genotype.size(); i++) {
+		genotype1.push_back(other.genotype[i]);
+		genotype2.push_back(genotype[i]);
 	}
 
 	return { Individual(genotype1), Individual(genotype2) };
 }
 
 
-void Individual::mutate(double mutationProbability) {
+void Individual::mutate(double mutProb) {
 	MyRandom rnd(0, 1);
-
 	for (int i = 0; i < genotype.size(); i++) {
-		if (rnd.getNextDouble() < mutationProbability) {
-			genotype[i] = -1 * genotype[i];
+		if (rnd.getNextDouble() < mutProb) {
+			genotype[i] = !genotype[i];
 			fitnessMem = -1;
 		}
 	}
 }
+
+std::vector<bool> Individual::getGenotype() {
+	return genotype;
+}
+
 
 std::ostream& operator<<(std::ostream& out, const Individual& individual) {
 	out << "Genotype: ";
@@ -87,6 +101,8 @@ std::ostream& operator<<(std::ostream& out, const Individual& individual) {
 			out << ", ";
 		}
 	}
+
+	out << "\t\tFitness : " << individual.fitnessMem;
 
 	return out;
 }

@@ -1,8 +1,8 @@
 #ifndef INDIVIDUAL_H
 #define INDIVIDUAL_H
 
-#include <vector>
 #include <iostream>
+#include <vector>
 
 class Individual {
 private:
@@ -11,13 +11,14 @@ private:
 
 public:
 	Individual(int genotypeLength);
+	Individual(const Individual& other);
 	Individual(std::vector<bool>& genotype);
 
-	double fitness(double knapsackCapacity, std::vector<double>& objectWeights, std::vector<double>& objectValues);
+	double fitness(double knapsackCapacity, std::vector<double>& weights, std::vector<double>& values);
+	std::vector<Individual> crossover(Individual& other, double crossProb);
+	void mutate(double mutProb);
 
-	std::vector<Individual> crossover(Individual& other, double crossoverProbability);
-
-	void mutate(double mutationProbability);
+	std::vector<bool> getGenotype();
 
 	friend std::ostream& operator<<(std::ostream& out, const Individual& individual);
 };
