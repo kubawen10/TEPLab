@@ -1,34 +1,24 @@
 #ifndef INDIVIDUAL_H
 #define INDIVIDUAL_H
 
+#include <vector>
+#include <iostream>
+
 class Individual {
 private:
-	bool* genotype;
-	int genotypeLength;
+	std::vector<bool> genotype;
+	double fitnessMem;
 
 public:
 	Individual(int genotypeLength);
+	Individual(std::vector<bool>& genotype);
 
-	template<typename W, typename V>
-	V fitness(W knapsackCapacity, W* objectWeights, V* objectValues);
+	double fitness(double knapsackCapacity, std::vector<double>& objectWeights, std::vector<double>& objectValues);
 
-	void crossover(Individual& other, double crossoverProbability);
+	std::vector<Individual> crossover(Individual& other, double crossoverProbability);
 
-	void mutation(double mutationProbability);
+	void mutate(double mutationProbability);
+
+	friend std::ostream& operator<<(std::ostream& out, const Individual& individual);
 };
-
-Individual::Individual(int genotypeLength) {
-	this->genotypeLength = genotypeLength;
-	
-	genotype = new bool[genotypeLength];
-
-}
-
-template<typename W, typename V>
-V Individual::fitness(W knapsackCapacity, W* objectWeights, V* objectValues) {
-	V result{};
-
-
-}
-
 #endif
