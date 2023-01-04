@@ -3,21 +3,23 @@
 #include <iostream>
 #include <vector>
 
-Individual::Individual(int genotypeLength) : fitnessMem{-1}
+Individual::Individual(int genotypeLength, double initialDensity) : fitnessMem{-1}
 {
 	//creating a random population
 	MyRandom rnd(0, 1);
 	genotype.reserve(genotypeLength);
 	for (int i = 0; i < genotypeLength; i++) {
-		genotype.push_back(rnd.getNextInt());
+		genotype.push_back(rnd.getNextDouble() < initialDensity);
 	}
 }
 
-Individual::Individual(const Individual& other): fitnessMem{other.fitnessMem}, genotype{other.genotype}{}
+Individual::Individual(const Individual& other): fitnessMem{ other.fitnessMem }, genotype{ other.genotype }{}
 
-Individual::Individual(std::vector<bool>& genotype) : fitnessMem{-1}, genotype{genotype}{}
+Individual::Individual(Individual&& other) : fitnessMem{ other.fitnessMem }, genotype{ std::move(other.genotype) }{}
 
-double Individual::fitness(double knapsackCapacity, std::vector<double>& weights, std::vector<double>& values) {
+Individual::Individual(std::vector<bool>&& genotype) : fitnessMem{-1}, genotype { std::move(genotype) }{}
+
+double Individual::fitness(double knapsackCapacity, const std::vector<double>& weights, const std::vector<double>& values) {
 	//check if fitness has already been calculated
 	if (fitnessMem != -1) {
 		return fitnessMem;
@@ -41,10 +43,10 @@ double Individual::fitness(double knapsackCapacity, std::vector<double>& weights
 	return totalValue;
 }
 
-std::vector<Individual> Individual::crossover(Individual& other, double crossProb) {
+std::vector<Individual> Individual::crossover(const Individual& other, double crossProb) const{
 	MyRandom probabilityRand(0, 1);
 
-	// if parants are the same individual or there is no srossing, we can return copies of the parent
+	// if parants are the same individual or there is no crossing, we can return copies of parents
 	if (probabilityRand.getNextDouble() > crossProb || this == &other) {
 		return { Individual(*this), Individual(other) };
 	}
@@ -69,7 +71,7 @@ std::vector<Individual> Individual::crossover(Individual& other, double crossPro
 		genotype2.push_back(genotype[i]);
 	}
 
-	return { Individual(genotype1), Individual(genotype2) };
+	return { Individual(std::move(genotype1)), Individual(std::move(genotype2)) };
 }
 
 
@@ -83,27 +85,15 @@ void Individual::mutate(double mutProb) {
 	}
 }
 
-std::vector<bool> Individual::getGenotype() {
+const std::vector<bool>& Individual::getGenotype() {
 	return genotype;
 }
 
+std::vector<bool> Individual::copyGenotype() {
+	return genotype;
+}
 
-std::ostream& operator<<(std::ostream& out, const Individual& individual) {
-	out << "Genotype: ";
-	out << "[";
-	for (int i = 0; i < individual.genotype.size(); i++) {
-		out << individual.genotype[i];
-
-		if (i == individual.genotype.size() - 1) {
-			out << "]";
-		}
-		else {
-			out << ", ";
-		}
-	}
-
-	out << "\t\tFitness : " << individual.fitnessMem;
-
-	return out;
+double Individual::getFitnessMem() {
+	return fitnessMem;
 }
 

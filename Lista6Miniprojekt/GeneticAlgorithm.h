@@ -3,30 +3,32 @@
 
 #include "Individual.h"
 #include "MyRandom.h"
+#include "KnapsackProblem.h"
 #include <vector>
 
 class GeneticAlgorithm {
 private:
-	int numberOfItems;
-	double knapsackCapacity;
-	std::vector<double> weights;
-	std::vector<double> values;
+	int popSize;
+	double popInitialDensity;
+	double crossProb; 
+	double mutProb;
+	int iterations;
 	std::vector<Individual> population;
+
+	double bestFitness;
+	std::vector<bool> bestGenotype;
 
 	//solve helpers
 	void initPopulation(int popSize);
+	void evaluatePopulation(const KnapsackProblem& knapsack);
 	void crossPopulation(double crossProb);
 	void mutatePopulation(double mutProb);
-	Individual& findParent();
+	const Individual& findParent();
 
-	//debug
-	bool debug = true;
-	void printPopulationDebug(); // calculates fitness inside
 public:
-	GeneticAlgorithm(int numberOfItems, double knapsackCapacity, std::vector<double>& weights, std::vector<double>& values);
-	void solve(int popSize, double crossProb, double mutProb, int iterations);
-	//std::vector<bool> getBest();
-	Individual getBest();
+	GeneticAlgorithm(int popSize, double popInitialDensity, double crossProb, double mutProb, int iterations);
+	void solve(const KnapsackProblem& knapsack);
+	std::vector<bool> getBestGenotype();
 };
 
 #endif

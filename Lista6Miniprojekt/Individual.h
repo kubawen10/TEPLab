@@ -10,16 +10,17 @@ private:
 	double fitnessMem;
 
 public:
-	Individual(int genotypeLength);
+	Individual(int genotypeLength, double initialDensity);
 	Individual(const Individual& other);
-	Individual(std::vector<bool>& genotype);
+	Individual(Individual&& other);
+	Individual(std::vector<bool>&& genotype);
 
-	double fitness(double knapsackCapacity, std::vector<double>& weights, std::vector<double>& values);
-	std::vector<Individual> crossover(Individual& other, double crossProb);
+	double fitness(double knapsackCapacity, const std::vector<double>& weights, const std::vector<double>& values);
+	std::vector<Individual> crossover(const Individual& other, double crossProb) const;
 	void mutate(double mutProb);
 
-	std::vector<bool> getGenotype();
-
-	friend std::ostream& operator<<(std::ostream& out, const Individual& individual);
+	const std::vector<bool>& getGenotype();
+	std::vector<bool> copyGenotype();
+	double getFitnessMem();
 };
 #endif
