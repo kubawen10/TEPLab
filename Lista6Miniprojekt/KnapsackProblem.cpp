@@ -1,7 +1,8 @@
 #include "KnapsackProblem.h"
-#include <iostream>
+//#include <iostream>
 #include <fstream>
-#include <locale>
+#include <vector>
+//#include <locale>
 
 void KnapsackProblem::init(int numberOfItems, double knapsackCapacity, std::vector<double> weights, std::vector<double> values) {
 	if (numberOfItems <= 0) 

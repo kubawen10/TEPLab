@@ -1,4 +1,7 @@
+#include "KnapsackProblem.h"
 #include "GeneticAlgorithm.h"
+#include "Individual.h"
+#include "RandomNumbers.h"
 #include <vector>
 
 GeneticAlgorithm::GeneticAlgorithm(int popSize, double popInitialDensity, double crossProb, double mutProb, int iterations)
@@ -59,9 +62,8 @@ void GeneticAlgorithm::crossPopulation(double crossProb) {
 
 const Individual& GeneticAlgorithm::findParent() {
 	//randomly pick two parents
-	MyRandom random(0, population.size() - 1);
-	int p1 = random.getNextInt();
-	int p2 = random.getNextInt();
+	int p1 = RandomNumbers::getNextInt(0, population.size() - 1);
+	int p2 = RandomNumbers::getNextInt(0, population.size() - 1);
 
 	//picked the same individual, no need to calculate fitness in this case
 	if (p1 == p2) return population[p1];

@@ -1,15 +1,14 @@
 #include "Individual.h"
-#include "MyRandom.h"
-#include <iostream>
+#include "RandomNumbers.h"
+//#include <iostream>
 #include <vector>
 
 Individual::Individual(int genotypeLength, double initialDensity) : fitnessMem{-1}
 {
 	//creating a random population
-	MyRandom rnd(0, 1);
 	genotype.reserve(genotypeLength);
 	for (int i = 0; i < genotypeLength; i++) {
-		genotype.push_back(rnd.getNextDouble() < initialDensity);
+		genotype.push_back(RandomNumbers::getNextDouble() < initialDensity);
 	}
 }
 
@@ -44,10 +43,8 @@ double Individual::fitness(double knapsackCapacity, const std::vector<double>& w
 }
 
 std::vector<Individual> Individual::crossover(const Individual& other, double crossProb) const{
-	MyRandom probabilityRand(0, 1);
-
 	// if parants are the same individual or there is no crossing, we can return copies of parents
-	if (probabilityRand.getNextDouble() > crossProb || this == &other) {
+	if (RandomNumbers::getNextDouble() > crossProb || this == &other) {
 		return { Individual(*this), Individual(other) };
 	}
 
@@ -58,8 +55,7 @@ std::vector<Individual> Individual::crossover(const Individual& other, double cr
 	genotype2.reserve(genotype.size());
 
 	//get random cross point, there are n-1 possible positions
-	MyRandom crossRand(1, genotype.size() - 1);
-	int crossPoint = crossRand.getNextInt();
+	int crossPoint = RandomNumbers::getNextInt(1, genotype.size() - 1);
 
 	//first part of the genotype remains the same for each parent, second is taken from the other parent
 	for (int i = 0; i < crossPoint; i++) {
@@ -76,9 +72,8 @@ std::vector<Individual> Individual::crossover(const Individual& other, double cr
 
 
 void Individual::mutate(double mutProb) {
-	MyRandom rnd(0, 1);
 	for (int i = 0; i < genotype.size(); i++) {
-		if (rnd.getNextDouble() < mutProb) {
+		if (RandomNumbers::getNextDouble() < mutProb) {
 			genotype[i] = !genotype[i];
 			fitnessMem = -1;
 		}

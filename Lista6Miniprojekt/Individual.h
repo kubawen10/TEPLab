@@ -1,7 +1,6 @@
 #ifndef INDIVIDUAL_H
 #define INDIVIDUAL_H
 
-#include <iostream>
 #include <vector>
 
 class Individual {

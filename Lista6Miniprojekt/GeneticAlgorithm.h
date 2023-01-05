@@ -1,9 +1,8 @@
 #ifndef GENETIC_ALGORITHM_H
 #define GENETIC_ALGORITHM_H
 
-#include "Individual.h"
-#include "MyRandom.h"
 #include "KnapsackProblem.h"
+#include "Individual.h"
 #include <vector>
 
 class GeneticAlgorithm {
