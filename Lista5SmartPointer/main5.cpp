@@ -3,14 +3,17 @@
 
 #include "MySmartPointer.h"
 #include "Tab.h"
+#include "Table.h"
 
 void testSmartPointer();
 void testEx4();
+void testEx5();
 
 int main()
 {
     //testSmartPointer(); //ex 1-3
-    testEx4();
+    //testEx4();
+    testEx5(); 
 }
 
 void testSmartPointer() {
@@ -66,7 +69,6 @@ void ex4MoveConstructor() {
 void ex4MoveOperator() {
     std::cout << "\n\nMOVE OPERATOR= DEMO\n\n";
 
-
     Tab t1;
     Tab t2;
     Tab t3;
@@ -81,7 +83,7 @@ void ex4MoveOperator() {
     std::cout << "t2: " << t2 << "\n";
     std::cout << "t3: " << t3 << "\n\n";
 
-    t1 = t2;// = t3;
+    t1 = t2 = t3;
     std::cout << "\nt1 after: " << t1 << "\n";
     std::cout << "t2 after: " << t2 << "\n";
     std::cout << "t3 after: " << t3 << "\n\n";
@@ -102,6 +104,24 @@ void ex4MoveOperator() {
 }
 
 void testEx4() {
-    //ex4MoveOperator();
+    ex4MoveOperator();
     ex4MoveConstructor();
+}
+
+void testEx5() {
+    Table t1("t1", 5);
+    Table t2("t2", 10);
+    Table t3("t3", 5);
+
+    t1.fill();
+    t2.fill();
+    t3.fill();
+
+    Table t4 = t1 + t2 + t3;
+    std::cout << t3.getLength() << "\n";
+
+    std::cout << t1 << "\n";
+    std::cout << t2 << "\n";
+    std::cout << t3 << "\n";
+    std::cout << t4 << "\n";
 }

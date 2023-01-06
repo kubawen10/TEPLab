@@ -3,14 +3,12 @@
 
 Tab::Tab(const Tab& other)
 {
-	std::cout << "Copy constructor in\n";
 	copy(other);
 	std::cout << "Copy Constructor out\n";
 }
 
 Tab::Tab(Tab&& other) noexcept 
 {
-	std::cout << "Move constructor in\n";
 	tab = other.tab;
 	size = other.size;
 
@@ -23,14 +21,11 @@ Tab::Tab(Tab&& other) noexcept
 Tab::~Tab()
 {
 	delete[] tab;
-
-	std::cout << "Destructor \n";
+	std::cout << "Destructor out\n";
 }
 
 Tab Tab::operator=(const Tab& other)
 {
-	std::cout << "op=& in\n";
-
 	if (&other == this) {
 		return *this;
 	}
@@ -45,8 +40,6 @@ Tab Tab::operator=(const Tab& other)
 
 Tab Tab::operator=(Tab&& other) noexcept
 {
-	std::cout << "op=&& in\n";
-
 	if (&other == this) {
 		return *this;
 	}
@@ -66,7 +59,6 @@ Tab Tab::operator=(Tab&& other) noexcept
 bool Tab::setSize(int newSize)
 {
 	if (newSize < 0) {
-		std::cerr << "Table length cannot be less than 0!\n";
 		return false;
 	}
 
@@ -75,7 +67,7 @@ bool Tab::setSize(int newSize)
 	}
 
 	int* temp = new int[newSize];
-	int smaller = std::min(size, newSize);
+	int smaller = size < newSize ? size : newSize;
 	for (int i = 0; i < smaller; i++)
 	{
 		temp[i] = tab[i];
@@ -97,7 +89,6 @@ void Tab::fill() {
 
 void Tab::copy(const Tab& other)
 {
-	std::cout << "Copy in\n";
 	tab = new int[other.size];
 	size = other.size;
 
@@ -105,8 +96,6 @@ void Tab::copy(const Tab& other)
 	{
 		tab[i] = other.tab[i];
 	}
-
-	std::cout << "Copy out\n";
 }
 
 std::ostream& operator<<(std::ostream& out, const Tab& table) {

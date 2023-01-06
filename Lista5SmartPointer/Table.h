@@ -24,12 +24,16 @@ public:
 
 	Table operator=(const Table& other);
 	Table operator=(Table&& other) noexcept;
-	Table operator+(const Table& other) const;
+
+	Table operator+(const Table& other) const&;
 
 	void setName(std::string newName);
 	bool setNewSize(int tableLen);
 	void setValueAt(int index, int value);
 
+	int getLength() {
+		return tableLength;
+	}
 	Table* clone();
 
 	//debug

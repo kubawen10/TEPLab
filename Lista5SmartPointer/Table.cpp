@@ -5,8 +5,6 @@
 #include "Table.h"
 
 Table::Table() {
-	std::cout << "Default in\n";
-
 	name = DEFAULT_NAME;
 	tableLength = DEFAULT_TABLE_LENGTH;
 	table = new int[tableLength];
@@ -15,9 +13,7 @@ Table::Table() {
 }
 
 Table::Table(std::string name, int tableLength) {
-	std::cout << "Param constructor " << name << " in\n";
-
-	this->name = std::move(name);
+	this->name = name;
 
 	if (tableLength < 0) {
 		std::cerr << "Wrong table length! Setting default table length";
@@ -32,8 +28,6 @@ Table::Table(std::string name, int tableLength) {
 }
 
 Table::Table(const Table& other) {
-	std::cout << "Copy constructor " << other.name << " in\n";
-
 	name = other.name + "_copy";
 	tableLength = other.tableLength;
 
@@ -46,9 +40,7 @@ Table::Table(const Table& other) {
 }
 
 Table::Table(Table&& other) noexcept{
-	std::cout << "Move copy constructor " << other.name << " in\n";
-
-	name = std::move(other.name);
+	name = other.name + "_copyMove";
 	table = other.table;
 	tableLength = other.tableLength;
 	
@@ -64,7 +56,7 @@ Table::~Table() {
 }
 
 void Table::setName(std::string newName) {
-	name = std::move(newName);
+	name = newName;
 }
 
 bool Table::setNewSize(int newTableLength) {
@@ -79,7 +71,7 @@ bool Table::setNewSize(int newTableLength) {
 
 	int* temp = new int[newTableLength];
 
-	int smaller = std::min(tableLength, newTableLength);
+	int smaller = tableLength < newTableLength ? tableLength : newTableLength;
 	for (int i = 0; i < smaller; i++) {
 		temp[i] = table[i];
 	}
@@ -108,8 +100,6 @@ Table* Table::clone() {
 //moze jakby stworzyc nowy obiekt i zwracac go poprzez std::move
 Table Table::operator=(const Table& other)
 {
-	std::cout << "operator= in";
-
 	if (&other == this) {
 		return *this;
 	}
@@ -123,7 +113,7 @@ Table Table::operator=(const Table& other)
 		table[i] = other.table[i];
 	}
 
-	std::cout << "operator= out";
+	std::cout << "operator= out\n";
 	return *this;
 }
 
@@ -131,8 +121,6 @@ Table Table::operator=(const Table& other)
 //moze jakby stworzyc nowy obiekt i zwracac go poprzez std::move
 Table Table::operator=(Table&& other) noexcept
 {
-	std::cout << "move operator= in";
-
 	if (&other == this) {
 		return *this;
 	}
@@ -145,13 +133,13 @@ Table Table::operator=(Table&& other) noexcept
 	other.table = nullptr;
 	other.tableLength = 0;
 
-	std::cout << "move operator= out";
+	std::cout << "move operator= out\n";
 	return *this;
 }
 
-Table Table::operator+(const Table& other) const{
-	std::cout << "operator+ in\n";
 
+
+Table Table::operator+(const Table& other) const&{
 	std::string sumName = name + " + " + other.name;
 	int sumLength = tableLength + other.tableLength;
 
@@ -181,7 +169,7 @@ std::ostream& operator<<(std::ostream& out, const Table& table) {
 	for (int i = 0; i < table.tableLength; i++) {
 		out << table.table[i];
 
-		if (i == table.tableLength) {
+		if (i == table.tableLength - 1) {
 			out << "]";
 		}
 		else {
