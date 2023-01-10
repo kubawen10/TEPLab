@@ -17,6 +17,9 @@ private:
 	double bestFitness;
 	std::vector<bool> bestGenotype;
 
+	//
+	double cropTo01Range(double x);
+
 	//solve helpers
 	void initPopulation(int popSize);
 	void evaluatePopulation(const KnapsackProblem& knapsack);
