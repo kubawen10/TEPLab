@@ -136,7 +136,6 @@
     <ClInclude Include="GeneticAlgorithm.h" />
     <ClInclude Include="Individual.h" />
     <ClInclude Include="KnapsackProblem.h" />
-    <ClInclude Include="MyRandom.h" />
     <ClInclude Include="RandomNumbers.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
