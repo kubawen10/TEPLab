@@ -44,15 +44,15 @@ void GeneticAlgorithm::solve(const KnapsackProblem& knapsack) {
 
 	for (int i = 0; i < iterations; i++) {
 		evaluatePopulation(knapsack);
-		crossPopulation(crossProb);
-		mutatePopulation(mutProb);
+		crossPopulation();
+		mutatePopulation();
 	}
 
 	//evaluation after last cross and mutation
 	evaluatePopulation(knapsack);
 }
 
-void GeneticAlgorithm::initPopulation(int numberOfItems) {
+void GeneticAlgorithm::initPopulation(const int& numberOfItems) {
 	//clear in case GA is used multiple times
 	population.clear();
 
@@ -68,12 +68,12 @@ void GeneticAlgorithm::evaluatePopulation(const KnapsackProblem& knapsack) {
 
 		if (curFitness > bestFitness) {
 			bestFitness = curFitness;
-			bestGenotype = population[i].copyGenotype();
+			bestGenotype = population[i].getGenotype();
 		}
 	}
 }
 
-void GeneticAlgorithm::crossPopulation(double crossProb) {
+void GeneticAlgorithm::crossPopulation() {
 	std::vector<Individual> newPopulation;
 	newPopulation.reserve(population.size());
 
@@ -104,13 +104,13 @@ const Individual& GeneticAlgorithm::findParent() {
 	return population[p1].getFitnessMem() > population[p2].getFitnessMem() ? population[p1] : population[p2];
 }
 
-void GeneticAlgorithm::mutatePopulation(double mutProb) {
+void GeneticAlgorithm::mutatePopulation() {
 	for (int i = 0; i < population.size(); i++) {
 		population[i].mutate(mutProb);
 	}
 }
 
-std::vector<bool> GeneticAlgorithm::getBestGenotype() {
+const std::vector<bool>& GeneticAlgorithm::getBestGenotype() {
 	return bestGenotype;
 }
 

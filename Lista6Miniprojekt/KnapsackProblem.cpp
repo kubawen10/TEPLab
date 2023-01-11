@@ -2,11 +2,16 @@
 #include <fstream>
 #include <vector>
 
-KnapsackProblem::KnapsackProblem(int numberOfItems, double knapsackCapacity, std::vector<double>& weights, std::vector<double>& values) {
+KnapsackProblem::KnapsackProblem(int numberOfItems, double knapsackCapacity, const std::vector<double>& weights, const std::vector<double>& values) {
 	init(numberOfItems, knapsackCapacity, weights, values);
 }
 
 KnapsackProblem::KnapsackProblem(std::string pathToFile) {
+	//file should be formatted as:
+	//numberOfItems knapsackCapacity
+	//valueOfItem_1 weightOfItem_1
+	//...
+	//valueOfItem_numberOfItems weightOfItem_numberOfItems
 	std::ifstream inf(pathToFile);
 
 	if (!inf.is_open())
@@ -35,7 +40,7 @@ KnapsackProblem::KnapsackProblem(std::string pathToFile) {
 	init(numberOfItemsIn, knapsackCapacityIn, weightIn, valueIn);
 }
 
-void KnapsackProblem::init(int numberOfItems, double knapsackCapacity, std::vector<double>& weights, std::vector<double>& values) {
+void KnapsackProblem::init(int numberOfItems, double knapsackCapacity, const std::vector<double>& weights, const std::vector<double>& values) {
 	if (numberOfItems <= 0) 
 		throw std::string("Number of items should be greater than 0!");
 	this->numberOfItems = numberOfItems;

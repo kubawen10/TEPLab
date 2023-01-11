@@ -6,7 +6,7 @@
 #include <cstdlib>
 
 void run(int popSize, double popDensity, double crossProb, double mutProb, int interations, std::string filePath);
-void printVector(std::vector<bool> v, double score);
+void printVector(const std::vector<bool>& v, double score);
 
 int main()
 {
@@ -31,7 +31,7 @@ void run(int popSize, double popDensity, double crossProb, double mutProb, int i
 	}
 }
 
-void printVector(std::vector<bool> v, double score) {
+void printVector(const std::vector<bool>& v, double score) {
 	std::cout << "Solution: ";
 	for (int i = 0; i < v.size(); i++) {
 		std::cout << v[i] << " ";

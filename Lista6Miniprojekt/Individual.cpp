@@ -1,9 +1,8 @@
 #include "Individual.h"
 #include "RandomNumbers.h"
-//#include <iostream>
 #include <vector>
 
-Individual::Individual(int genotypeLength, double initialDensity) : fitnessMem{-1}
+Individual::Individual(const int& genotypeLength, const double& initialDensity) : fitnessMem{-1}
 {
 	//creating a random population
 	genotype.reserve(genotypeLength);
@@ -14,7 +13,7 @@ Individual::Individual(int genotypeLength, double initialDensity) : fitnessMem{-
 
 Individual::Individual(const Individual& other): fitnessMem{ other.fitnessMem }, genotype{ other.genotype }{}
 
-Individual::Individual(Individual&& other) : fitnessMem{ other.fitnessMem }, genotype{ std::move(other.genotype) }{}
+Individual::Individual(Individual&& other) noexcept : fitnessMem{ other.fitnessMem }, genotype{ std::move(other.genotype) }{}
 
 Individual::Individual(std::vector<bool>&& genotype) : fitnessMem{-1}, genotype { std::move(genotype) }{}
 
@@ -27,7 +26,7 @@ double Individual::fitness(const KnapsackProblem& problem) {
 	return fitnessMem;
 }
 
-std::vector<Individual> Individual::crossover(const Individual& other, double crossProb) const{
+std::vector<Individual> Individual::crossover(const Individual& other, const double& crossProb) const{
 	// if parants are the same individual or there is no crossing, we can return copies of parents
 	if (RandomNumbers::getNextDouble() > crossProb || this == &other) {
 		return { Individual(*this), Individual(other) };
@@ -56,7 +55,7 @@ std::vector<Individual> Individual::crossover(const Individual& other, double cr
 }
 
 
-void Individual::mutate(double mutProb) {
+void Individual::mutate(const double& mutProb) {
 	for (int i = 0; i < genotype.size(); i++) {
 		if (RandomNumbers::getNextDouble() < mutProb) {
 			genotype[i] = !genotype[i];
@@ -66,10 +65,6 @@ void Individual::mutate(double mutProb) {
 }
 
 const std::vector<bool>& Individual::getGenotype() {
-	return genotype;
-}
-
-std::vector<bool> Individual::copyGenotype() {
 	return genotype;
 }
 
