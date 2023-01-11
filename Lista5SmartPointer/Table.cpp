@@ -139,7 +139,7 @@ Table Table::operator=(Table&& other) noexcept
 
 
 
-Table Table::operator+(const Table& other) const&{
+Table Table::operator+(const Table& other) const{
 	std::string sumName = name + " + " + other.name;
 	int sumLength = tableLength + other.tableLength;
 

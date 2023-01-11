@@ -18,28 +18,13 @@ Individual::Individual(Individual&& other) : fitnessMem{ other.fitnessMem }, gen
 
 Individual::Individual(std::vector<bool>&& genotype) : fitnessMem{-1}, genotype { std::move(genotype) }{}
 
-double Individual::fitness(double knapsackCapacity, const std::vector<double>& weights, const std::vector<double>& values) {
+double Individual::fitness(const KnapsackProblem& problem) {
 	//check if fitness has already been calculated
 	if (fitnessMem != -1) {
 		return fitnessMem;
 	}
-
-	double totalValue = 0;
-	double totalWeight = 0;
-
-	for (int i = 0; i < genotype.size(); i++) {
-		totalValue += genotype[i] * values[i];
-		totalWeight += genotype[i] * weights[i];
-
-		// fitness == 0 if weight of the objects is greater than knapsack capacity
-		if (totalWeight > knapsackCapacity) {
-			fitnessMem = 0;
-			return 0;
-		}
-	}
-
-	fitnessMem = totalValue;
-	return totalValue;
+	fitnessMem = problem.genotypeScore(genotype);
+	return fitnessMem;
 }
 
 std::vector<Individual> Individual::crossover(const Individual& other, double crossProb) const{

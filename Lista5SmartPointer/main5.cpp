@@ -11,9 +11,9 @@ void testEx5();
 
 int main()
 {
-    //testSmartPointer(); //ex 1-3
+    testSmartPointer(); //ex 1-3
     //testEx4();
-    testEx5(); 
+    //testEx5(); 
 }
 
 void testSmartPointer() {

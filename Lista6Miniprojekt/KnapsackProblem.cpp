@@ -1,33 +1,15 @@
 #include "KnapsackProblem.h"
-//#include <iostream>
 #include <fstream>
 #include <vector>
-//#include <locale>
 
-void KnapsackProblem::init(int numberOfItems, double knapsackCapacity, std::vector<double> weights, std::vector<double> values) {
-	if (numberOfItems <= 0) 
-		throw std::string("Number of items should be greater than 0!");
-	this->numberOfItems = numberOfItems;
-
-	if (knapsackCapacity <= 0) 
-		throw std::string("Knapsack Capacity should be greater than 0!");
-	this->knapsackCapacity = knapsackCapacity;
-
-	if (weights.size() != numberOfItems || values.size() != numberOfItems) 
-		throw std::string("Vector's size is different than the number of items!");
-
-	for (int i = 0; i < numberOfItems; i++) {
-		if (weights[i] <= 0 || values[i] <= 0) 
-			throw std::string("Vectors' values should be greater than 0!");
-	}
-	this->weights = weights;
-	this->values = values;
+KnapsackProblem::KnapsackProblem(int numberOfItems, double knapsackCapacity, std::vector<double>& weights, std::vector<double>& values) {
+	init(numberOfItems, knapsackCapacity, weights, values);
 }
 
-void KnapsackProblem::init(std::string pathToFile) {
-	std::ifstream inf;
-	inf.open(pathToFile);
-	if (!inf)
+KnapsackProblem::KnapsackProblem(std::string pathToFile) {
+	std::ifstream inf(pathToFile);
+
+	if (!inf.is_open())
 		throw std::string("Couldn't open file!");
 
 	int numberOfItemsIn = 0;
@@ -51,6 +33,26 @@ void KnapsackProblem::init(std::string pathToFile) {
 	inf.close();
 
 	init(numberOfItemsIn, knapsackCapacityIn, weightIn, valueIn);
+}
+
+void KnapsackProblem::init(int numberOfItems, double knapsackCapacity, std::vector<double>& weights, std::vector<double>& values) {
+	if (numberOfItems <= 0) 
+		throw std::string("Number of items should be greater than 0!");
+	this->numberOfItems = numberOfItems;
+
+	if (knapsackCapacity <= 0) 
+		throw std::string("Knapsack Capacity should be greater than 0!");
+	this->knapsackCapacity = knapsackCapacity;
+
+	if (weights.size() != numberOfItems || values.size() != numberOfItems) 
+		throw std::string("Vector's size is different than the number of items!");
+
+	for (int i = 0; i < numberOfItems; i++) {
+		if (weights[i] <= 0 || values[i] <= 0) 
+			throw std::string("Vectors' values should be greater than 0!");
+	}
+	this->weights = weights;
+	this->values = values;
 }
 
 double KnapsackProblem::genotypeScore(const std::vector<bool>& genotype) const {

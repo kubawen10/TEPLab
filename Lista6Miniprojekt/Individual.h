@@ -1,6 +1,7 @@
 #ifndef INDIVIDUAL_H
 #define INDIVIDUAL_H
 
+#include "KnapsackProblem.h"
 #include <vector>
 
 class Individual {
@@ -14,7 +15,7 @@ public:
 	Individual(Individual&& other);
 	Individual(std::vector<bool>&& genotype);
 
-	double fitness(double knapsackCapacity, const std::vector<double>& weights, const std::vector<double>& values);
+	double fitness(const KnapsackProblem& problem);
 	std::vector<Individual> crossover(const Individual& other, double crossProb) const;
 	void mutate(double mutProb);
 

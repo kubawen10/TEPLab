@@ -16,19 +16,19 @@ int main()
 }
 
 void run(int popSize, double popDensity, double crossProb, double mutProb, int interations, std::string filePath) {
-	KnapsackProblem knapsack;
+	
 	try {
-		knapsack.init(filePath);
+		KnapsackProblem knapsack(filePath);
+		GeneticAlgorithm ga(popSize, popDensity, crossProb, mutProb, interations);
+		ga.solve(knapsack);
+		printVector(ga.getBestGenotype(), knapsack.genotypeScore(ga.getBestGenotype()));
+
 	}
 	catch (std::string e) {
 		std::cerr << e;
 		std::cerr << "\nTerminating the program.";
 		exit(EXIT_FAILURE);
 	}
-	GeneticAlgorithm ga(popSize, popDensity, crossProb, mutProb, interations);
-	ga.solve(knapsack);
-
-	printVector(ga.getBestGenotype(), knapsack.genotypeScore(ga.getBestGenotype()));
 }
 
 void printVector(std::vector<bool> v, double score) {

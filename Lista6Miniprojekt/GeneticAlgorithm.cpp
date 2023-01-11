@@ -64,7 +64,7 @@ void GeneticAlgorithm::initPopulation(int numberOfItems) {
 
 void GeneticAlgorithm::evaluatePopulation(const KnapsackProblem& knapsack) {
 	for (int i = 0; i < popSize; i++) {
-		double curFitness = population[i].fitness(knapsack.getKnapsackCapacity(), knapsack.getWeights(), knapsack.getValues());
+		double curFitness = population[i].fitness(knapsack);
 
 		if (curFitness > bestFitness) {
 			bestFitness = curFitness;

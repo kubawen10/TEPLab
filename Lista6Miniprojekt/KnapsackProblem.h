@@ -11,12 +11,13 @@ private:
 	std::vector<double> weights;
 	std::vector<double> values;
 
-public:
-	KnapsackProblem() = default;
-	void init(int numberOfItems, double knapsackCapacity, std::vector<double> weights, std::vector<double> values);
-	void init(std::string pathToFile);
-	double genotypeScore(const std::vector<bool>& genotype) const;
+	void init(int numberOfItems, double knapsackCapacity, std::vector<double>& weights, std::vector<double>& values);
 
+public:
+	KnapsackProblem(int numberOfItems, double knapsackCapacity, std::vector<double>& weights, std::vector<double>& values);
+	KnapsackProblem(std::string pathToFile);
+	
+	double genotypeScore(const std::vector<bool>& genotype) const;
 
 	int getNumberOfItems() const {
 		return numberOfItems;

@@ -17,7 +17,6 @@ private:
 	double bestFitness;
 	std::vector<bool> bestGenotype;
 
-	//
 	double cropTo01Range(double x);
 
 	//solve helpers
