@@ -5,13 +5,10 @@
 #include <vector>
 
 GeneticAlgorithm::GeneticAlgorithm(int popSize, double popInitialDensity, double crossProb, double mutProb, int iterations)
-	: bestFitness{-1}
+	: bestFitness{-1}, popSize{popSize}, iterations{iterations}
 {
 	if (popSize <= 0) {
-		popSize = 1;
-	}
-	else {
-		this->popSize = popSize;
+		this->popSize = 1;
 	}
 	
 	this->popInitialDensity = cropTo01Range(popInitialDensity);
@@ -20,9 +17,6 @@ GeneticAlgorithm::GeneticAlgorithm(int popSize, double popInitialDensity, double
 
 	if (iterations < 0) {
 		this->iterations = 0;
-	}
-	else {
-		this->iterations = iterations;
 	}
 }
 
@@ -39,7 +33,7 @@ double GeneticAlgorithm::cropTo01Range(double x) {
 }
 
 //main method of the algorithm
-void GeneticAlgorithm::solve(const KnapsackProblem& knapsack) {
+const std::vector<bool>& GeneticAlgorithm::solve(const KnapsackProblem& knapsack) {
 	initPopulation(knapsack.getNumberOfItems());
 
 	for (int i = 0; i < iterations; i++) {
@@ -50,11 +44,14 @@ void GeneticAlgorithm::solve(const KnapsackProblem& knapsack) {
 
 	//evaluation after last cross and mutation
 	evaluatePopulation(knapsack);
+
+	return getBestGenotype();
 }
 
-void GeneticAlgorithm::initPopulation(const int& numberOfItems) {
+void GeneticAlgorithm::initPopulation(const int numberOfItems) {
 	//clear in case GA is used multiple times
 	population.clear();
+	bestFitness = -1;
 
 	population.reserve(popSize);
 	for (int i = 0; i < popSize; i++) {
@@ -66,6 +63,7 @@ void GeneticAlgorithm::evaluatePopulation(const KnapsackProblem& knapsack) {
 	for (int i = 0; i < popSize; i++) {
 		double curFitness = population[i].fitness(knapsack);
 
+		//saving the best genotype overall
 		if (curFitness > bestFitness) {
 			bestFitness = curFitness;
 			bestGenotype = population[i].getGenotype();
@@ -81,10 +79,9 @@ void GeneticAlgorithm::crossPopulation() {
 		const Individual& parent1 = findParent();
 		const Individual& parent2 = findParent();
 
-		//cross parents
-		std::vector<Individual> children = std::move(parent1.crossover(parent2, crossProb));
+		std::vector<Individual> children = parent1.crossover(parent2, crossProb);
 
-		// add children to newPopulation, if there is only one place left: add only first child (when popSize is odd)
+		// adding children to newPopulation, if there is only one place left: add only first child (used if popSize is odd)
 		newPopulation.push_back(std::move(children[0]));
 		if(newPopulation.size() < population.size()) newPopulation.push_back(std::move(children[1]));
 	}
@@ -93,14 +90,13 @@ void GeneticAlgorithm::crossPopulation() {
 }
 
 const Individual& GeneticAlgorithm::findParent() {
-	//randomly pick two parents
 	int p1 = RandomNumbers::getNextInt(0, population.size() - 1);
 	int p2 = RandomNumbers::getNextInt(0, population.size() - 1);
 
 	//picked the same individual, no need to calculate fitness in this case
 	if (p1 == p2) return population[p1];
 
-	//choose parent with better fitness
+	//choose parent with better fitness, fitness was calculated during evaluation
 	return population[p1].getFitnessMem() > population[p2].getFitnessMem() ? population[p1] : population[p2];
 }
 

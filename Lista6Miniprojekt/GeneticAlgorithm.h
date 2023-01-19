@@ -13,14 +13,12 @@ private:
 	double mutProb;
 	int iterations;
 	std::vector<Individual> population;
-
 	double bestFitness;
 	std::vector<bool> bestGenotype;
 
 	double cropTo01Range(double x);
-
 	//solve helpers
-	void initPopulation(const int& numberOfItems);
+	void initPopulation(const int numberOfItems);
 	void evaluatePopulation(const KnapsackProblem& knapsack);
 	void crossPopulation();
 	const Individual& findParent();
@@ -28,7 +26,14 @@ private:
 
 public:
 	GeneticAlgorithm(int popSize, double popInitialDensity, double crossProb, double mutProb, int iterations);
-	void solve(const KnapsackProblem& knapsack);
+	GeneticAlgorithm(const GeneticAlgorithm& other) = default;
+	GeneticAlgorithm(GeneticAlgorithm&& other) = default;
+	~GeneticAlgorithm() = default;
+	GeneticAlgorithm& operator=(const GeneticAlgorithm& other) = default;
+	GeneticAlgorithm& operator=(GeneticAlgorithm&& other) = default;
+
+
+	const std::vector<bool>& solve(const KnapsackProblem& knapsack);
 	const std::vector<bool>& getBestGenotype();
 };
 

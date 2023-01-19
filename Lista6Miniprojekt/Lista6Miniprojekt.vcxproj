@@ -133,6 +133,7 @@
     <ClCompile Include="Lista6Miniprojekt.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Exceptions.h" />
     <ClInclude Include="GeneticAlgorithm.h" />
     <ClInclude Include="Individual.h" />
     <ClInclude Include="KnapsackProblem.h" />

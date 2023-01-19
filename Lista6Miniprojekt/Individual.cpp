@@ -2,18 +2,13 @@
 #include "RandomNumbers.h"
 #include <vector>
 
-Individual::Individual(const int& genotypeLength, const double& initialDensity) : fitnessMem{-1}
-{
+Individual::Individual(const int genotypeLength, const double initialDensity) : fitnessMem{-1}{
 	//creating a random population
 	genotype.reserve(genotypeLength);
 	for (int i = 0; i < genotypeLength; i++) {
 		genotype.push_back(RandomNumbers::getNextDouble() < initialDensity);
 	}
 }
-
-Individual::Individual(const Individual& other): fitnessMem{ other.fitnessMem }, genotype{ other.genotype }{}
-
-Individual::Individual(Individual&& other) noexcept : fitnessMem{ other.fitnessMem }, genotype{ std::move(other.genotype) }{}
 
 Individual::Individual(std::vector<bool>&& genotype) : fitnessMem{-1}, genotype { std::move(genotype) }{}
 
@@ -22,11 +17,12 @@ double Individual::fitness(const KnapsackProblem& problem) {
 	if (fitnessMem != -1) {
 		return fitnessMem;
 	}
+	//saving fitness for later use
 	fitnessMem = problem.genotypeScore(genotype);
 	return fitnessMem;
 }
 
-std::vector<Individual> Individual::crossover(const Individual& other, const double& crossProb) const{
+std::vector<Individual> Individual::crossover(const Individual& other, const double crossProb) const{
 	// if parants are the same individual or there is no crossing, we can return copies of parents
 	if (RandomNumbers::getNextDouble() > crossProb || this == &other) {
 		return { Individual(*this), Individual(other) };
@@ -38,7 +34,7 @@ std::vector<Individual> Individual::crossover(const Individual& other, const dou
 	genotype1.reserve(genotype.size());
 	genotype2.reserve(genotype.size());
 
-	//get random cross point, there are n-1 possible positions
+	//random cross point, there are n-1 possible positions
 	int crossPoint = RandomNumbers::getNextInt(1, genotype.size() - 1);
 
 	//first part of the genotype remains the same for each parent, second is taken from the other parent
@@ -55,7 +51,7 @@ std::vector<Individual> Individual::crossover(const Individual& other, const dou
 }
 
 
-void Individual::mutate(const double& mutProb) {
+void Individual::mutate(const double mutProb) {
 	for (int i = 0; i < genotype.size(); i++) {
 		if (RandomNumbers::getNextDouble() < mutProb) {
 			genotype[i] = !genotype[i];
