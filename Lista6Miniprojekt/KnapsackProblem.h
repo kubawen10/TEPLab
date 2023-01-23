@@ -13,8 +13,12 @@ private:
 
 	void init(int numberOfItems, double knapsackCapacity, const std::vector<double>& weights, const std::vector<double>& values);
 	
-	const std::string NUMBER_OR_CAPACITY_EXCEPTION_MSG = "Could not read number of items and/or knapsack capacity. The first be of format: 'numberOfItems knapsackCapacity'";
+	const std::string NUMBER_OR_CAPACITY_EXCEPTION_MSG = "Could not read number of items and/or knapsack capacity. The first row should be of format: 'numberOfItems knapsackCapacity'";
 	const std::string VALUES_OR_WEIGHTS_EXCEPTION_MSG = "Could not read values and/or weights. There should be numberOfItems rows of format: 'value weight'";
+	const std::string NUMBER_OF_ITEMS_LESS_OR_EQUAL_THAN_0_EXCEPTION_MSG = "Number of items should be greater than 0!";
+	const std::string KNAPSACK_CAPACITY_LESS_OR_EQUAL_THAN_0_EXCEPTION_MSG = "Knapsack Capacity should be greater than 0!";
+	const std::string DIFFERENT_VECTOR_SIZE_EXCEPTION_MSG = "Vector's size is different than the number of items!";
+	const std::string ITEM_VALUE_LESS_OR_EQUAL_THAN_0_EXCEPTION_MSG = "Item's values and weights should be greater than 0!";
 
 public:
 	KnapsackProblem(int numberOfItems, double knapsackCapacity, const std::vector<double>& weights, const std::vector<double>& values);

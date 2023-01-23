@@ -19,11 +19,12 @@ KnapsackProblem::KnapsackProblem(const std::string& pathToFile) {
 	if (!inf.is_open())
 		throw CouldNotOpenFileException(pathToFile);
 
-	int numberOfItemsIn;
+	double numberOfItemsInBuff;
 	double knapsackCapacityIn;
-	if (!(inf >> numberOfItemsIn >> knapsackCapacityIn)) {
+	if (!(inf >> numberOfItemsInBuff >> knapsackCapacityIn)) {
 		throw FileParsingException(NUMBER_OR_CAPACITY_EXCEPTION_MSG);
 	}
+	int numberOfItemsIn = numberOfItemsInBuff;
 	std::vector<double> valueIn;
 	std::vector<double> weightIn;
 
@@ -42,19 +43,19 @@ KnapsackProblem::KnapsackProblem(const std::string& pathToFile) {
 
 void KnapsackProblem::init(int numberOfItems, double knapsackCapacity, const std::vector<double>& values, const std::vector<double>& weights) {
 	if (numberOfItems <= 0) 
-		throw InvalidArgumentException("Number of items should be greater than 0!");
+		throw InvalidArgumentException(NUMBER_OF_ITEMS_LESS_OR_EQUAL_THAN_0_EXCEPTION_MSG);
 	this->numberOfItems = numberOfItems;
 
 	if (knapsackCapacity <= 0) 
-		throw InvalidArgumentException("Knapsack Capacity should be greater than 0!");
+		throw InvalidArgumentException(KNAPSACK_CAPACITY_LESS_OR_EQUAL_THAN_0_EXCEPTION_MSG);
 	this->knapsackCapacity = knapsackCapacity;
 
 	if (weights.size() != numberOfItems || values.size() != numberOfItems) 
-		throw InvalidArgumentException("Vector's size is different than the number of items!");
+		throw InvalidArgumentException(DIFFERENT_VECTOR_SIZE_EXCEPTION_MSG);
 
 	for (int i = 0; i < numberOfItems; i++) {
 		if (weights[i] <= 0 || values[i] <= 0) 
-			throw InvalidArgumentException("Vector's values should be greater than 0!");
+			throw InvalidArgumentException(ITEM_VALUE_LESS_OR_EQUAL_THAN_0_EXCEPTION_MSG);
 	}
 	this->weights = weights;
 	this->values = values;
